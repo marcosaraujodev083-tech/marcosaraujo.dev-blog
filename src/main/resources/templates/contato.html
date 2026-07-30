@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato — marcosaraujo.dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8f9fa] text-[#1a1a1a] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200">
+
+<!-- Header Estruturado com Avatar e Identidade Visual Padronizada -->
+<header class="border-b border-gray-200 pb-5 mb-8 flex justify-between items-center">
+
+    <!-- Foto + Nome e Nav -->
+    <div class="flex items-center space-x-3.5">
+        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-12 h-12">
+            <img src="https://github.com/marcosaraujodev083-tech.png"
+                 alt="Marcos Araújo"
+                 class="w-full h-full object-cover">
+        </a>
+
+        <div>
+            <a href="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition block leading-tight">
+                marcosaraujo.dev
+            </a>
+            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 mt-1">
+                <span>Notes & News</span>
+                <span>•</span>
+                <a href="https://github.com/marcosaraujodev083-tech"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="hover:text-black hover:underline transition">
+                    GitHub
+                </a>
+                <span>•</span>
+                <a href="/contato"
+                   class="hover:text-black hover:underline transition font-semibold text-black">
+                    Contato
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Versão à Direita -->
+    <div class="text-[11px] text-gray-400 font-mono hidden sm:block">
+        <span>v1.0</span>
+    </div>
+
+</header>
+
+<!-- Botão / Link para Voltar -->
+<nav class="mb-6">
+    <a href="/" class="text-[11px] font-mono text-gray-500 hover:text-black transition flex items-center space-x-1">
+        <span>← Voltar para a página inicial</span>
+    </a>
+</nav>
+
+<!-- Título da Seção de Contato -->
+<section class="mb-6 border-b border-gray-200 pb-5">
+    <h1 class="text-2xl font-bold tracking-tight text-gray-900 leading-tight">
+        Contato & Conexão
+    </h1>
+    <p class="text-xs text-gray-500 font-mono mt-1.5">
+        Canais diretos para oportunidades, consultoria e network técnico.
+    </p>
+</section>
+
+<!-- Conteúdo / Canais de Contato -->
+<main class="space-y-5 text-xs leading-relaxed text-gray-800">
+
+    <p class="text-xs text-gray-600">
+        Estou sempre aberto a conversas sobre <strong>Engenharia de Software, Arquitetura de Sistemas e Segurança de Aplicações (AppSec)</strong>.
+    </p>
+
+    <div class="border border-gray-200 rounded-lg p-4 bg-white space-y-3 font-mono text-[11px]">
+
+        <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+            <span class="text-gray-500">E-mail Profissional:</span>
+            <a href="mailto:marcosaraujodev083@gmail.com" class="text-blue-600 font-semibold hover:underline">
+                Fale comigo
+            </a>
+        </div>
+
+        <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+            <span class="text-gray-500">LinkedIn:</span>
+            <a href="https://www.linkedin.com/in/marcos-araujo-517201212/" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold hover:underline">
+                @MarcosAraujo
+            </a>
+        </div>
+
+        <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+            <span class="text-gray-500">Repositório do Blog:</span>
+            <a href="https://github.com/marcosaraujodev083-tech" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold hover:underline">
+                Visite aqui
+            </a>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <span class="text-gray-500">Localização:</span>
+            <span class="text-gray-900">São Paulo, SP - Brasil</span>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="mt-12 pt-5 border-t border-gray-200 text-center text-[11px] text-gray-400 font-mono">
+    &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Marcos Araújo.
+</footer>
+
+</body>
+</html>

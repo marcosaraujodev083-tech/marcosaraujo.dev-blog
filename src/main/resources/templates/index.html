@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>marcosaraujo.dev — Notes & News</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<!-- Ajuste 1: max-w-xl (em vez de max-w-2xl) e py-8 (em vez de py-10) -->
+<body class="bg-[#f8f9fa] text-[#1a1a1a] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200">
+
+<!-- Header Estruturado -->
+<header class="border-b border-gray-200 pb-5 mb-8 flex justify-between items-center">
+
+    <!-- Foto + Nome e Nav -->
+    <div class="flex items-center space-x-3.5">
+        <!-- Avatar Circular Ajustado (w-12 h-12 = 48px, um toque menor que os 56px anteriores) -->
+        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-12 h-12">
+            <img src="https://github.com/marcosaraujodev083-tech.png"
+                 alt="Marcos Araújo"
+                 class="w-full h-full object-cover">
+        </a>
+
+        <!-- Nome e Navegação -->
+        <div>
+            <a href="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition block leading-tight">
+                marcosaraujo.dev
+            </a>
+            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 mt-1">
+                <span>Notes & News</span>
+                <span>•</span>
+                <a href="https://github.com/marcosaraujodev083-tech"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="hover:text-black hover:underline transition">
+                    GitHub
+                </a>
+                <span>•</span>
+                <a href="/contato"
+                   class="hover:text-black hover:underline transition">
+                    Contato
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Versão à Direita -->
+    <div class="text-[11px] text-gray-400 font-mono hidden sm:block">
+        <span>v1.0</span>
+    </div>
+
+</header>
+
+<!-- Listagem de Artigos -->
+<main class="space-y-5">
+
+    <!-- Estado Vazio (Sem posts cadastrados) -->
+    <div th:if="${#lists.isEmpty(posts)}" class="py-10 text-center text-gray-500 text-xs font-mono border border-dashed border-gray-300 rounded-lg">
+        Nenhum artigo publicado ainda. Em breve novos conteúdos por aqui!
+    </div>
+
+    <!-- Loop de Posts -->
+    <article th:each="post : ${posts}" class="group pb-3.5 border-b border-gray-100 last:border-0">
+        <a th:href="@{'/post/' + ${post.slug}}" class="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition duration-150 leading-snug block">
+            <span th:text="${post.title}">Título do Artigo</span>
+        </a>
+
+        <p class="text-xs text-gray-600 mt-1 line-clamp-2 leading-relaxed" th:text="${post.summary}">
+            Resumo curto do post para rápida leitura...
+        </p>
+
+        <div class="text-[11px] font-mono text-gray-400 mt-2 flex items-center space-x-2">
+            <time th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy')}">30/07/2026</time>
+            <span>•</span>
+            <span th:text="${post.tags}" class="text-gray-500 uppercase tracking-wider text-[9px]">java, architecture</span>
+        </div>
+    </article>
+
+</main>
+
+<!-- Footer -->
+<footer class="mt-12 pt-5 border-t border-gray-200 text-center text-[11px] text-gray-400 font-mono">
+    &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Marcos Araújo. Publicado via API estritamente autorizada.
+</footer>
+
+</body>
+</html>

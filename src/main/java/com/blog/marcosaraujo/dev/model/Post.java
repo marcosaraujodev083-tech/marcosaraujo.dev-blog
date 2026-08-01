@@ -5,47 +5,42 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_post")
+@Table(name = "posts")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false, unique = true)
     private String slug;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "TEXT")
     private String summary;
 
-    @Lob
-    @Column(nullable = false)
-    private String contentMarkdown;
+    @Column(columnDefinition = "TEXT")
+    private String content; // Nome exato igual ao Admin
 
-    private String tags;
+    private boolean draft = true;
 
-    @Column(nullable = false, updatable = false)
-    private  LocalDateTime createdAt;
+    // Nome exato da coluna gerada pelo Admin
+    @Column(name = "reading_time_minutes")
+    private Integer readingTimeMinutes;
 
-    private LocalDateTime updatedAt;
+    private LocalDateTime publishedAt;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+    private LocalDateTime updateAt;
+
+    // TRATAMENTO DE NULL para o tempo de leitura
+    public Integer getReadingTimeMinutes() {
+        return readingTimeMinutes != null ? readingTimeMinutes : 1;
     }
 }

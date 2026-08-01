@@ -27,7 +27,6 @@ public class PostResponseDTO {
                 .title(post.getTitle())
                 .slug(post.getSlug())
                 .summary(post.getSummary())
-                .tags(post.getTags())
                 .createdAt(post.getCreatedAt())
                 .build();
     }

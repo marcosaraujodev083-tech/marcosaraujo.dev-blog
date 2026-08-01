@@ -4,85 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${post.title} + ' — marcosaraujo.dev'">Artigo — marcosaraujo.dev</title>
-    <!-- Script unificado do Tailwind CSS com o plugin Typography -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-</head>
-<body class="bg-[#f8f9fa] text-[#1a1a1a] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200">
 
-<!-- Header Estruturado com Avatar e Identidade Visual Padronizada -->
-<header class="border-b border-gray-200 pb-5 mb-8 flex justify-between items-center">
+    <!-- Previne o "flash" branco ao carregar caso o Dark Mode esteja ativo -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <!-- Script unificado do Tailwind CSS com fontes nativas de sistema (estilo TabNews) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8f9fa] dark:bg-[#121214] text-[#1a1a1a] dark:text-[#e1e1e6] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200 dark:selection:bg-gray-800 transition-colors duration-200">
+
+<!-- Header Estruturado -->
+<header class="border-b border-gray-200 dark:border-zinc-800 pb-5 mb-8 flex justify-between items-center">
 
     <!-- Foto + Nome e Nav -->
     <div class="flex items-center space-x-3.5">
-        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-12 h-12">
+        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-11 h-11">
             <img src="https://github.com/marcosaraujodev083-tech.png"
                  alt="Marcos Araújo"
                  class="w-full h-full object-cover">
         </a>
 
         <div>
-            <a href="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition block leading-tight">
+            <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition block leading-none dark:text-zinc-100">
                 marcosaraujo.dev
             </a>
-            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 mt-1">
+            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 dark:text-zinc-400 mt-1.5">
                 <span>Notes & News</span>
                 <span>•</span>
                 <a href="https://github.com/marcosaraujodev083-tech"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="hover:text-black hover:underline transition">
+                   class="hover:text-black dark:hover:text-white hover:underline transition">
                     GitHub
                 </a>
                 <span>•</span>
                 <a href="/contato"
-                   class="hover:text-black hover:underline transition">
+                   class="hover:text-black dark:hover:text-white hover:underline transition">
                     Contato
                 </a>
             </nav>
         </div>
     </div>
 
-    <!-- Versão à Direita -->
-    <div class="text-[11px] text-gray-400 font-mono hidden sm:block">
-        <span>v1.0</span>
+    <!-- Lâmpada Retrô / Toggle Dark Mode -->
+    <div class="flex items-center space-x-3">
+        <button id="theme-toggle"
+                type="button"
+                title="Alternar tema"
+                class="p-1.5 rounded-lg text-gray-500 dark:text-amber-400 hover:bg-gray-200/60 dark:hover:bg-zinc-800 hover:text-amber-500 transition duration-150 focus:outline-none">
+            <!-- Ícone de Lâmpada Retrô em SVG -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26C17.81 13.47 19 11.38 19 9a7 7 0 0 0-7-7z" />
+                <path d="M10 14a3.5 3.5 0 0 0 4 0" />
+            </svg>
+        </button>
+
+        <span class="text-[11px] text-gray-400 dark:text-zinc-500 font-mono hidden sm:block">v1.0</span>
     </div>
 
 </header>
 
 <!-- Botão / Link para Voltar -->
 <nav class="mb-6">
-    <a href="/" class="text-[11px] font-mono text-gray-500 hover:text-black transition flex items-center space-x-1">
+    <a href="/" class="text-[11px] font-mono text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition flex items-center space-x-1">
         <span>← Voltar para todos os artigos</span>
     </a>
 </nav>
 
 <!-- Cabeçalho do Artigo -->
-<section class="mb-6 border-b border-gray-200 pb-5">
-    <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 leading-tight" th:text="${post.title}">
+<section class="mb-6 border-b border-gray-200 dark:border-zinc-800 pb-5">
+    <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-zinc-100 leading-snug" th:text="${post.title}">
         Título do Artigo
     </h1>
 
-    <div class="text-[11px] font-mono text-gray-400 mt-3 flex items-center space-x-2">
+    <div class="text-[11px] font-mono text-gray-400 dark:text-zinc-500 mt-2.5 flex items-center space-x-2 flex-wrap">
         <span>Por Marcos Araújo</span>
         <span>•</span>
-        <time th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy - HH:mm')}">30/07/2026 - 14:00</time>
-        <span>•</span>
-        <span th:text="${post.tags}" class="text-gray-500 uppercase tracking-wider text-[9px]">java, security</span>
+
+        <!-- Data de publicação -->
+        <time th:text="${#temporals.format(post.publishedAt != null ? post.publishedAt : post.createdAt, 'dd/MM/yyyy - HH:mm')}">30/07/2026 - 14:00</time>
+
+        <!-- Tempo estimado de leitura -->
+        <th:block th:if="${post.readingTimeMinutes != null}">
+            <span>•</span>
+            <span th:text="${post.readingTimeMinutes + ' min de leitura'}">5 min de leitura</span>
+        </th:block>
     </div>
 </section>
 
-<!-- Conteúdo do Artigo (Markdown convertido em HTML) -->
-<main class="prose prose-neutral prose-sm max-w-none prose-headings:font-bold prose-a:text-blue-600 prose-img:rounded-lg">
+<!-- Conteúdo do Artigo -->
+<main class="prose prose-neutral dark:prose-invert max-w-none
+             text-[13px] leading-relaxed text-[#222222] dark:text-[#d1d5db]
+             prose-p:my-3.5
+             prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-gray-900 dark:prose-headings:text-zinc-100
+             prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+             prose-code:font-mono prose-code:bg-gray-200/60 dark:prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+             prose-img:rounded-lg">
     <div th:utext="${contentHtml}">
         <p>Conteúdo do artigo em HTML renderizado aqui...</p>
     </div>
 </main>
 
 <!-- Footer -->
-<footer class="mt-12 pt-5 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-400 font-mono">
-    <a href="/" class="hover:text-black transition">← Voltar à lista</a>
+<footer class="mt-12 pt-5 border-t border-gray-200 dark:border-zinc-800 flex justify-between items-center text-[11px] text-gray-400 dark:text-zinc-500 font-mono">
+    <a href="/" class="hover:text-black dark:hover:text-white transition">← Voltar à lista</a>
     <span>marcosaraujo.dev</span>
 </footer>
+
+<!-- Script para alternar o tema e guardar no localStorage -->
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

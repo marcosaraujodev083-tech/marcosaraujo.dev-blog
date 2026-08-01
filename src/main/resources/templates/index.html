@@ -4,18 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>marcosaraujo.dev — Notes & News</title>
+
+    <!-- Previne o "flash" branco ao carregar caso o Dark Mode esteja ativo -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <!-- Importação da fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<!-- Ajuste 1: max-w-xl (em vez de max-w-2xl) e py-8 (em vez de py-10) -->
-<body class="bg-[#f8f9fa] text-[#1a1a1a] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200">
+<body class="bg-[#f8f9fa] dark:bg-[#121214] text-[#1a1a1a] dark:text-[#e1e1e6] font-sans antialiased max-w-xl mx-auto px-4 py-8 selection:bg-gray-200 dark:selection:bg-gray-800 transition-colors duration-200">
 
 <!-- Header Estruturado -->
-<header class="border-b border-gray-200 pb-5 mb-8 flex justify-between items-center">
+<header class="border-b border-gray-200 dark:border-zinc-800 pb-5 mb-6 flex justify-between items-center">
 
     <!-- Foto + Nome e Nav -->
     <div class="flex items-center space-x-3.5">
-        <!-- Avatar Circular Ajustado (w-12 h-12 = 48px, um toque menor que os 56px anteriores) -->
-        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-12 h-12">
+        <a href="/" class="shrink-0 hover:opacity-90 transition block rounded-full overflow-hidden w-11 h-11">
             <img src="https://github.com/marcosaraujodev083-tech.png"
                  alt="Marcos Araújo"
                  class="w-full h-full object-cover">
@@ -23,65 +48,103 @@
 
         <!-- Nome e Navegação -->
         <div>
-            <a href="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition block leading-tight">
+            <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-80 transition block leading-none dark:text-zinc-100">
                 marcosaraujo.dev
             </a>
-            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 mt-1">
+            <nav class="flex items-center space-x-2 text-[11px] font-mono text-gray-500 dark:text-zinc-400 mt-1.5">
                 <span>Notes & News</span>
                 <span>•</span>
                 <a href="https://github.com/marcosaraujodev083-tech"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="hover:text-black hover:underline transition">
+                   class="hover:text-black dark:hover:text-white hover:underline transition">
                     GitHub
                 </a>
                 <span>•</span>
                 <a href="/contato"
-                   class="hover:text-black hover:underline transition">
+                   class="hover:text-black dark:hover:text-white hover:underline transition">
                     Contato
                 </a>
             </nav>
         </div>
     </div>
 
-    <!-- Versão à Direita -->
-    <div class="text-[11px] text-gray-400 font-mono hidden sm:block">
-        <span>v1.0</span>
+    <!-- Lâmpada Retrô / Toggle Dark Mode e Versão -->
+    <div class="flex items-center space-x-3">
+        <button id="theme-toggle"
+                type="button"
+                title="Alternar tema"
+                class="p-1.5 rounded-lg text-gray-500 dark:text-amber-400 hover:bg-gray-200/60 dark:hover:bg-zinc-800 hover:text-amber-500 transition duration-150 focus:outline-none">
+            <!-- Ícone de Lâmpada SVG -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26C17.81 13.47 19 11.38 19 9a7 7 0 0 0-7-7z" />
+                <path d="M10 14a3.5 3.5 0 0 0 4 0" />
+            </svg>
+        </button>
+
+        <span class="text-[11px] text-gray-400 dark:text-zinc-500 font-mono hidden sm:block">v1.0</span>
     </div>
 
 </header>
 
-<!-- Listagem de Artigos -->
-<main class="space-y-5">
+<!-- Listagem de Artigos Compacta e Minimalista -->
+<main class="space-y-3.5">
 
-    <!-- Estado Vazio (Sem posts cadastrados) -->
-    <div th:if="${#lists.isEmpty(posts)}" class="py-10 text-center text-gray-500 text-xs font-mono border border-dashed border-gray-300 rounded-lg">
+    <!-- Estado Vazio -->
+    <div th:if="${#lists.isEmpty(posts)}" class="py-8 text-center text-gray-500 dark:text-zinc-400 text-xs font-mono border border-dashed border-gray-300 dark:border-zinc-800 rounded-lg">
         Nenhum artigo publicado ainda. Em breve novos conteúdos por aqui!
     </div>
 
     <!-- Loop de Posts -->
-    <article th:each="post : ${posts}" class="group pb-3.5 border-b border-gray-100 last:border-0">
-        <a th:href="@{'/post/' + ${post.slug}}" class="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition duration-150 leading-snug block">
-            <span th:text="${post.title}">Título do Artigo</span>
-        </a>
+    <article th:each="post, postStat : ${posts}" class="flex items-baseline space-x-2.5">
 
-        <p class="text-xs text-gray-600 mt-1 line-clamp-2 leading-relaxed" th:text="${post.summary}">
-            Resumo curto do post para rápida leitura...
-        </p>
+        <!-- Número do item -->
+        <span class="text-sm font-normal text-gray-400 dark:text-zinc-500 font-mono shrink-0 select-none" th:text="${postStat.count + '.'}">1.</span>
 
-        <div class="text-[11px] font-mono text-gray-400 mt-2 flex items-center space-x-2">
-            <time th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy')}">30/07/2026</time>
-            <span>•</span>
-            <span th:text="${post.tags}" class="text-gray-500 uppercase tracking-wider text-[9px]">java, architecture</span>
+        <div class="flex-1 min-w-0">
+            <!-- Título -->
+            <a th:href="@{'/post/' + ${post.slug}}" class="text-sm font-medium text-gray-900 dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 transition duration-150 leading-snug inline">
+                <span th:text="${post.title}">Título do Artigo</span>
+            </a>
+
+            <!-- Metadados -->
+            <div class="text-[11px] font-mono text-gray-400 dark:text-zinc-500 mt-0.5 flex items-center space-x-1.5">
+                <time th:text="${#temporals.format(post.publishedAt != null ? post.publishedAt : post.createdAt, 'dd/MM/yyyy')}">30/07/2026</time>
+
+                <th:block th:if="${post.readingTimeMinutes != null}">
+                    <span>•</span>
+                    <span th:text="${post.readingTimeMinutes + ' min de leitura'}">1 min de leitura</span>
+                </th:block>
+            </div>
         </div>
+
     </article>
 
 </main>
 
 <!-- Footer -->
-<footer class="mt-12 pt-5 border-t border-gray-200 text-center text-[11px] text-gray-400 font-mono">
-    &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Marcos Araújo. Publicado via API estritamente autorizada.
+<footer class="mt-10 pt-4 border-t border-gray-200 dark:border-zinc-800 text-center text-[11px] text-gray-400 dark:text-zinc-500 font-mono">
+    &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Marcos Araújo. Publicado via Supabase & Spring Boot.
 </footer>
+
+<!-- Script para alternar o tema e guardar no localStorage -->
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

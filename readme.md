@@ -80,9 +80,10 @@ Os artigos exibidos nesta aplicação pública são consumidos e atualizados via
 
 ### 🟡 Próximas Funcionalidades & Evoluções Públicas
 
+- [x] **Cadastro de Newsletter Incluso** Em uma pagina independente
 - [ ] **Filtro & Busca por Tags:** Navegação e filtragem de artigos por categoria/tecnologia.
-- [ ] **Modo Escuro (Dark Mode):** Alternância sutil de tema claro/escuro com persistência de preferência do leitor.
-- [ ] **Tempo Estimado de Leitura:** Cálculo automático no cabeçalho do post (ex: *"5 min de leitura"*).
+- [x] **Modo Escuro (Dark Mode):** Alternância sutil de tema claro/escuro com persistência de preferência do leitor.
+- [x] **Tempo Estimado de Leitura:** Cálculo automático no cabeçalho do post (ex: *"5 min de leitura"*).
 - [ ] **Feedback do Leitor:** Botão simples de reação/curtida por artigo sem necessidade de login.
 - [ ] **SEO & Open Graph:** Meta tags automáticas para preview enriquecido ao compartilhar links no LinkedIn e Twitter/X.
 - [ ] **RSS Feed & Sitemap:** Gerador automático de `feed.xml` e `sitemap.xml` para indexação em motores de busca.
